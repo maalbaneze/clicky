@@ -5,8 +5,17 @@ import Footer from './Footer/index.js';
 import Banner from './Banner/index.js';
 import images from './images/images.js';
 
+function shuffleImages(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+};
+
 class ClickyGame extends Component {
     state = {
+        images,
         score: 0,
         highScore: 0,
 
@@ -103,6 +112,11 @@ class ClickyGame extends Component {
         // removes the green correct indicator on a successful click after .5s to re-render the class on each success
         return setTimeout(() => this.setState({ navMsgColor: '' }), 500);
     }
+
+    handleShuffle = () => {
+        let shuffledImages = shuffleImages(images);
+        this.setState({ images: shuffledImages });
+    };
 
     // renders score to the navbar.
     // passes the randomized state.allCharacters array to Container to create a Character component for each image.
